@@ -543,6 +543,23 @@ console.log(marriedJessica2);
 // Deep clones are not easy to acheive, and are beyond the scope of this lecture, like Python, this is usually done with an external library which handles the quite complex creation of a deep clone. We will discuss this in more detail later on.
 
 // NOTES
+// MORE ON CREATING COPIES/CLONES
+
+// Another more modern way to create a shallow copy is to use the following syntax with the spread operator. This is a new feature added in ES2024 and is much simpler than using Object.assign().
+
+const jessicaCopy = { ...jessica2 };
+jessicaCopy.lastName = 'Raynor';
+console.log(jessica2);
+console.log(jessicaCopy);
+
+// Deep copy
+// We can use the ES2024 function 'structuredClone()' with the object we want to clone within the parentheses. We can now actually manipulate complex datatypes within this clone without affecting the other version. We have actually made a deep copy/clone.
+const jessicaClone = structuredClone(jessica2);
+jessicaClone.family.push('Jimmy');
+console.log(jessica2);
+console.log(jessicaClone);
+
+// NOTES
 // MEMORY MANAGEGEMENT: GARBAGE COLLECTION
 // Each value we create in JavaScript goes through a memory cycle, allocation of memory, use of memory, and the release of memory.
 
