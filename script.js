@@ -541,3 +541,41 @@ console.log(jessica2);
 console.log(marriedJessica2);
 
 // Deep clones are not easy to acheive, and are beyond the scope of this lecture, like Python, this is usually done with an external library which handles the quite complex creation of a deep clone. We will discuss this in more detail later on.
+
+// NOTES
+// MEMORY MANAGEGEMENT: GARBAGE COLLECTION
+// Each value we create in JavaScript goes through a memory cycle, allocation of memory, use of memory, and the release of memory.
+
+// How is memory freed up after we no longer need a certain value?
+// This works differently between the callstack and the heap.
+
+// On the callstack, primitive values can simply be deleted from the callstack whenever the execution context is finished. As soon as the execution context finishes, the values are deleted and the memory is freed up. Variables in the global context will never be deleted as long as the program is running, as they are still in the global execution context.
+
+// On the heap it is more complicated, a process called garbage collection runs when it wants to in the JavaScript engine. Memory management via garbage collection is automatic and we do not have power over this as a developer. All modern engines use an algorithm called 'Mark and Sweep'.
+
+// MARK
+// The callstack stores references to the values stored on the heap. The first step of garage collection is the 'MARK' phase. This phase marks all objects that are reachable from a root as 'alive'.
+
+// If something can be reached from the callstack, or a reference pointing to it on the heap it is alive and reachable. Things accessible by closures, active timers, and event handlers are also reachable and alive in terms of the garbage collection algorithm.
+
+// If something cannot be reached by any roots, it is 'dead' and the mark and sweep algorithm cannot mark it as 'alive'.
+
+// SWEEP
+// Objects that cannot be reached and marked in the previous phase are all deleted in this phase. Any unreachable or 'dead' objects will be deleted and their memory usage will be reclaimed.
+
+// When things pop off the callstack, it may influence what objects are reachable and marked as alive. So when a reference to something on the heap pops off the callstack, if there is nothing else referencing the object (i.e. it has no root) it will not be marked and will then be swept away.
+
+// Objects linked to the global EC or on an event handler, active listener, or closure will never be deleted.
+
+// If we have too many objects referenced when they shouldn't be, this causes memory leaks, meaning that the longer the program runs the more memory will be allocated that cannot be re-allocated until performance is affected or a crash happens.
+
+// That means we have to be careful to delete unneeded closures, event handlers and timers when we don't need them in our code. Also, we shouldn't define very large objects in the global EC unless we need to, as these objects will never be deleted, they can take up too much space and cause memory leaks.
+
+// Upcoming important topics.
+// Closures will be studied in more detail in the 'A Closer Look at Functions' part of the course.
+
+// Prototypal Inheritance is important, but will be studied later in the 'Object Oriented Programming (OOP) With JavaScript' section of the course.
+
+// The Event Loop will be studied later in the 'Asynchronous JavaScript: Promises, Async/ Await and AJAX' section.
+
+// How the DOM really works behind the scenes will be studied in the 'Advanced DOM and Events' section of the course.
